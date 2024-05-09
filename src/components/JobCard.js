@@ -1,8 +1,135 @@
 import React from 'react'
+import { Card, Typography, Button, styled} from '@mui/material'
+import {data} from '../data'
+
+const CardHeader = styled('div')({
+  display : 'flex',
+  gap : '0.5rem'
+})
+
+const HeaderTitle = styled(Typography)`
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+  color: #8b8b8b;
+`
+
+const HeaderSubTitle = styled(Typography)`
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+`
+
+const HeaderSubText = styled(Typography)`
+  font-size: 11px;
+  font-weight: 500;
+  margin-top: 5px; 
+`
+
+const CardContent = styled('div')`
+  height: 250px;
+  overflow: hidden;
+  mask-image: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255), rgba(255, 255, 255, 0));
+`
+
+const SalaryTypography = styled(Typography)({
+    fontWeight:300, 
+    fontSize:14, margin:'8px 0px', 
+    color: "rgb(77, 89, 106)", 
+    lineHeight:1.43
+})
+
+const ViewJobContainer = styled('div')`
+  text-align: center;
+  margin-bottom: 0.5rem;
+  position: relative;
+  top: -20px;
+`
+
+const ViewJobText = styled('a')`
+ color : #4943da;
+ outline : none;
+ cursor: pointer;
+ text-decoration: none;
+ font-size: 14px;
+ font-weight: 300 ;
+`
+
+const MinExpText = styled(Typography)`
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+    color: #8b8b8b;
+`
+
+const MinExpSubText = styled(Typography)`
+font-size: 14px;
+    line-height: 1.5;
+    font-weight : 300;
+`
+
+const ButtonGroup = styled('div')`
+flex-grow: 1;
+width: 100%;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items: flex-start;
+`
+
+const EasyApplyButton = styled(Button)`
+    width: 100%;
+    background-color: rgb(85, 239, 196);
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    padding: 8px 18px;
+    text-transform : none;
+    border-radius: 8px;
+    margin: 5px 0;
+    &:hover {
+        background-color: rgb(85, 239, 196);
+    }
+`
 
 function JobCard() {
   return (
-    <div>JobCard</div>
+    <Card sx={{ maxWidth: 345, padding:'16px' }}>
+      <CardHeader>
+        <div style={{ height : 40 , width : 40}}>
+          <img style={{ height : 40 , width : 40, objectFit : 'cover'}} src={data.logoUrl} alt='logo' />
+        </div>
+        <div>
+          <div>
+            <HeaderTitle variant='h3'>{data.companyName}</HeaderTitle>
+            <HeaderSubTitle>{data.jobRole}</HeaderSubTitle>
+          </div>
+          <HeaderSubText>Mumbai</HeaderSubText>
+        </div>
+      </CardHeader>
+      <SalaryTypography >
+        Estimated Salary : 10-14 LPA
+      </SalaryTypography>
+      <CardContent>
+        <Typography style={{fontWeight:500, fontSize:'1rem', lineHeight:1.5}}>
+            About Company:
+        </Typography>
+        <Typography style={{ fontSize:14, fontWeight:300, whiteSpace:'pre-wrap'}}>
+            {data.jobDetailsFromCompany}
+        </Typography>
+      </CardContent>
+        <ViewJobContainer>
+            <ViewJobText href='#'>View job</ViewJobText>
+        </ViewJobContainer>
+        <div style={{marginTop:10, paddingBottom:8}}>
+            <MinExpText>Minimum Experience</MinExpText>
+            <MinExpSubText>1 years</MinExpSubText>
+        </div>
+        <ButtonGroup>
+            <EasyApplyButton>⚡ Easy Apply</EasyApplyButton>
+        </ButtonGroup>
+    </Card>
   )
 }
 
