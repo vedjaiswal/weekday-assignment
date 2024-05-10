@@ -124,8 +124,8 @@ const PersonAvatar = styled(Avatar)({
 
 function JobCard({ job }) {
 
-  console.log(job)
-  console.log(job.logoUrl)
+  // console.log(job)
+  // console.log(job.logoUrl)
   
   return (
     <Wrapper sx={{ maxWidth: 345, padding:'16px', borderRadius:'20px' }}>

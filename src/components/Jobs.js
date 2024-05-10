@@ -6,6 +6,7 @@ import { getNextBatch } from '../api'
 
 const GridContainer = styled(Grid)(({ theme }) => ({
     width:'80vw',
+    margin: '2px',
     [theme.breakpoints.down('md')]: {
         width:'90vw'
     }
@@ -20,7 +21,7 @@ function Jobs() {
     <GridContainer container spacing={4} >
         {
             jobs.map(job =>(
-                <Grid item xs={12} sm={12} md={4} lg={4} >
+                <Grid item xs={12} sm={12} md={6} lg={4} >
                     <JobCard job={job} key={job.jdUid} />
                 </Grid>
             ))

@@ -33,12 +33,12 @@ export const roles = [
     {role : 'Other Engineering', title : 'Systems'},    
 ]
 
-export const experience = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+export const experience = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 export const location = ["India", "Mumbai", "Delhi", "Bangalore", "Pune", "Hyderabad", "Chennai", "Kolkata", "Gurgaon", "Noida"]
 
 export const remote = ["Remote", "Hybrid", "In-office"]
 
-export const minBasePay = [0, 10, 20, 30, 40, 50, 60, 70];
+export const minBasePay = ['0L', '10L', '20L', '30L', '40L', '50L', '60L', '70L'];
 
 export const techStack = ["React", "Nodejs", "React Native", "Flutter", "Express", "Java", "MongoDB", "MERN", "Web Development", "Python", "JavaScript", "C", "C++", "C#", "Android Development", "AI ML", "Vue JS", "Angular", "SQL", "Postgres", "IOS", "MEAN"]
