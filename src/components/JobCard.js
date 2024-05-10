@@ -1,6 +1,12 @@
 import React from 'react'
-import { Card, Typography, Button, styled} from '@mui/material'
+import { Card, Avatar, Typography, Button, styled} from '@mui/material'
 import {data} from '../data'
+
+//person images
+import person1 from '../assets/personImage1.png'
+import person2 from '../assets/personImage2.png'
+
+// import { getData } from '../api'
 
 const CardHeader = styled('div')({
   display : 'flex',
@@ -92,18 +98,41 @@ const EasyApplyButton = styled(Button)`
         background-color: rgb(85, 239, 196);
     }
 `
+const ReferralButton = styled(Button)`
+    width: 100%;
+    background-color: #4943DA;
+    color: white;
+    font-weight: 300;
+    padding: 8px 18px;
+    text-transform : none;
+    border-radius: 8px;
+    margin: 5px 0;
+    gap : 5px;
+    &:hover {
+        background-color: #4943DA;
+    }
+`
 
-function JobCard() {
+const PersonAvatar = styled(Avatar)({
+    width:30,
+    height:30
+})
+
+function JobCard({ job }) {
+
+  console.log(job)
+  console.log(job.logoUrl)
+  
   return (
-    <Card sx={{ maxWidth: 345, padding:'16px' }}>
+    <Card sx={{ maxWidth: 345, padding:'16px', borderRadius:'20px' }}>
       <CardHeader>
         <div style={{ height : 40 , width : 40}}>
-          <img style={{ height : 40 , width : 40, objectFit : 'cover'}} src={data.logoUrl} alt='logo' />
+          <img style={{ height : 40 , width : 40, objectFit : 'cover'}} src={job.logoUrl} alt='logo' />
         </div>
         <div>
           <div>
-            <HeaderTitle variant='h3'>{data.companyName}</HeaderTitle>
-            <HeaderSubTitle>{data.jobRole}</HeaderSubTitle>
+            <HeaderTitle variant='h3'>{job.companyName}</HeaderTitle>
+            <HeaderSubTitle>{job.jobRole}</HeaderSubTitle>
           </div>
           <HeaderSubText>Mumbai</HeaderSubText>
         </div>
@@ -116,7 +145,7 @@ function JobCard() {
             About Company:
         </Typography>
         <Typography style={{ fontSize:14, fontWeight:300, whiteSpace:'pre-wrap'}}>
-            {data.jobDetailsFromCompany}
+            {job.jobDetailsFromCompany}
         </Typography>
       </CardContent>
         <ViewJobContainer>
@@ -128,6 +157,11 @@ function JobCard() {
         </div>
         <ButtonGroup>
             <EasyApplyButton>⚡ Easy Apply</EasyApplyButton>
+            <ReferralButton>
+                <PersonAvatar  src={person1} alt='person1' />
+                <PersonAvatar src={person2} alt='person2' />
+                &nbsp; Unlock referral asks
+            </ReferralButton>
         </ButtonGroup>
     </Card>
   )
