@@ -1,12 +1,16 @@
 import React from 'react'
 import { Card, Avatar, Typography, Button, styled} from '@mui/material'
-import {data} from '../data'
 
 //person images
 import person1 from '../assets/personImage1.png'
 import person2 from '../assets/personImage2.png'
 
-// import { getData } from '../api'
+
+const Wrapper = styled(Card)`
+-webkit-box-shadow: 1px 2px 5px -1px rgba(26,22,26,0.31);
+-moz-box-shadow: 1px 2px 5px -1px rgba(26,22,26,0.31);
+box-shadow: 1px 2px 5px -1px rgba(26,22,26,0.31);
+`
 
 const CardHeader = styled('div')({
   display : 'flex',
@@ -124,7 +128,7 @@ function JobCard({ job }) {
   console.log(job.logoUrl)
   
   return (
-    <Card sx={{ maxWidth: 345, padding:'16px', borderRadius:'20px' }}>
+    <Wrapper sx={{ maxWidth: 345, padding:'16px', borderRadius:'20px' }}>
       <CardHeader>
         <div style={{ height : 40 , width : 40}}>
           <img style={{ height : 40 , width : 40, objectFit : 'cover'}} src={job.logoUrl} alt='logo' />
@@ -163,7 +167,7 @@ function JobCard({ job }) {
                 &nbsp; Unlock referral asks
             </ReferralButton>
         </ButtonGroup>
-    </Card>
+    </Wrapper>
   )
 }
 

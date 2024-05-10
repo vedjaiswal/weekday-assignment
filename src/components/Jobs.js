@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import JobCard from './JobCard'
-import { Grid } from '@mui/material';
+import { Grid, styled } from '@mui/material';
 
 import { getNextBatch } from '../api'
 
+const GridContainer = styled(Grid)(({ theme }) => ({
+    width:'80vw',
+    [theme.breakpoints.down('md')]: {
+        width:'90vw'
+    }
+}));
 
 function Jobs() {
 
@@ -11,7 +17,7 @@ function Jobs() {
     const [ jobs, setJobs ] = useState(getNextBatch(0));
 
   return (
-    <Grid container justifyContent="space-evenly" spacing={4} >
+    <GridContainer container spacing={4} >
         {
             jobs.map(job =>(
                 <Grid item xs={12} sm={12} md={4} lg={4} >
@@ -19,7 +25,7 @@ function Jobs() {
                 </Grid>
             ))
         }
-    </Grid>
+    </GridContainer>
   )
 }
 
