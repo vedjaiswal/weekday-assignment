@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import JobCard from './JobCard'
-import { Grid, styled } from '@mui/material';
+import { Button, Grid, styled } from '@mui/material';
 
 import { getNextBatch } from '../api'
+import { add } from '../redux/slices/jobSlice';
+
+import { useSelector, useDispatch } from 'react-redux';
 
 const GridContainer = styled(Grid)(({ theme }) => ({
     width:'80vw',
@@ -15,7 +18,17 @@ const GridContainer = styled(Grid)(({ theme }) => ({
 function Jobs() {
 
     const [ count, setCount ] = useState(1);
-    const [ jobs, setJobs ] = useState(getNextBatch(0));
+    const dispatch = useDispatch();
+    const jobState = useSelector(state => state.jobs.value);
+    const [ jobs, setJobs ] = useState([]);
+
+    const loadMore = () =>{
+        dispatch(add(1))
+    }
+
+    useEffect(()=>{
+        setJobs(jobState)
+    }, [jobState])
 
   return (
     <GridContainer container spacing={4} >
@@ -26,6 +39,7 @@ function Jobs() {
                 </Grid>
             ))
         }
+        <Button variant='contained' onClick={loadMore}>load</Button>
     </GridContainer>
   )
 }
