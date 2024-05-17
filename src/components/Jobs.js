@@ -19,21 +19,22 @@ function Jobs() {
 
     const [ count, setCount ] = useState(1);
     const dispatch = useDispatch();
-    const jobState = useSelector(state => state.jobs.value);
-    const [ jobs, setJobs ] = useState([]);
+    const jobs = useSelector(state => state.jobs.value);
+    const [ totalJobs, setTotalJobs ] = useState([]);
 
     const loadMore = () =>{
-        dispatch(add(1))
+        dispatch(add(count))
+        setCount(prev => prev+1);
     }
 
     useEffect(()=>{
-        setJobs(jobState)
-    }, [jobState])
+        setTotalJobs(jobs)
+    }, [jobs])
 
   return (
     <GridContainer container spacing={4} >
         {
-            jobs.map(job =>(
+            totalJobs.map(job =>(
                 <Grid item xs={12} sm={12} md={6} lg={4} >
                     <JobCard job={job} key={job.jdUid} />
                 </Grid>

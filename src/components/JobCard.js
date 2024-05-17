@@ -128,7 +128,7 @@ function JobCard({ job }) {
   // console.log(job.logoUrl)
   
   return (
-    <Wrapper sx={{ maxWidth: 345, padding:'16px', borderRadius:'20px' }}>
+    <Wrapper variant='outlined' sx={{ maxWidth: 345, padding:'16px', borderRadius:'20px' }}>
       <CardHeader>
         <div style={{ height : 40 , width : 40}}>
           <img style={{ height : 40 , width : 40, objectFit : 'cover'}} src={job.logoUrl} alt='logo' />
