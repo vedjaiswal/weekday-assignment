@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import {TextField, Autocomplete, styled} from '@mui/material';
+import {TextField, styled} from '@mui/material';
 
 import { roles, experience, location, remote, minBasePay, techStack } from '../constants/filterData';
 
 import MultiInputField from './MultiInputField';
 import SingleInputField from './SingleInputField';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { filterUpdate } from '../redux/slices/filtersSlice';
 
 const MainContainer = styled('div')(({ theme }) => ({
     width:'75vw',
@@ -20,31 +20,15 @@ const MainContainer = styled('div')(({ theme }) => ({
     }
 }));
 
-const initialJobFilters = {
-  role : [],
-  experience : null,
-  remote : [],
-  techStack : [],
-  location : [],
-  minBasePay : null,
-  companyName : null
-}
 
 export default function Filters() {
 
-  const [ filteredJobs, setFilteredJobs ] = useState(null)
-  const [ filters, setFilters ] = useState(initialJobFilters)
-  
-  const jobs = useSelector(state => state.jobs.value);
+  const filters = useSelector(state => state.filters.value);
+  const dispatch = useDispatch();
 
    const onFilterChange = (key, value) =>{
-     setFilters({...filters, [key]:value})
-     console.log(filters)
+     dispatch(filterUpdate({key : key, value : value}));
    }
-
-    // useEffect(()=>{
-    //   setFilteredJobs(jobs);
-    // }, jobs)
 
   return (
     <MainContainer>       

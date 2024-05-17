@@ -138,7 +138,7 @@ function JobCard({ job }) {
             <HeaderTitle variant='h3'>{job.companyName}</HeaderTitle>
             <HeaderSubTitle>{job.jobRole}</HeaderSubTitle>
           </div>
-          <HeaderSubText>Mumbai</HeaderSubText>
+          <HeaderSubText>{job.location}</HeaderSubText>
         </div>
       </CardHeader>
       <SalaryTypography >
