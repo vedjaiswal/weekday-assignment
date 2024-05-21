@@ -5,6 +5,10 @@ import { Card, Avatar, Typography, Button, styled} from '@mui/material'
 import person1 from '../assets/personImage1.png'
 import person2 from '../assets/personImage2.png'
 
+//utils
+import { roleFormatting } from '../utils/roleFormatting'
+import { locationFormatting } from '../utils/locationFormatting'
+import { salaryFormatting } from '../utils/salaryFormatting'
 
 const Wrapper = styled(Card)`
 -webkit-box-shadow: 1px 2px 5px -1px rgba(26,22,26,0.31);
@@ -37,14 +41,14 @@ const HeaderSubText = styled(Typography)`
   margin-top: 5px; 
 `
 
-const CardContent = styled('div')`
-  height: 250px;
-  overflow: hidden;
-  mask-image: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255), rgba(255, 255, 255, 0));
-`
+const CardContent = styled('div')(({ isNull }) => ({
+  height: isNull ? '300px' : '250px',
+  overflow: 'hidden',
+  maskImage : 'linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255), rgba(255, 255, 255, 0))'
+}));
 
 const SalaryTypography = styled(Typography)({
-    fontWeight:300, 
+    fontWeight:500, 
     fontSize:14, margin:'8px 0px', 
     color: "rgb(77, 89, 106)", 
     lineHeight:1.43
@@ -124,8 +128,7 @@ const PersonAvatar = styled(Avatar)({
 
 function JobCard({ job }) {
 
-  // console.log(job)
-  // console.log(job.logoUrl)
+  const salary = salaryFormatting(job.minJdSalary, job.maxJdSalary, job.salaryCurrencyCode);
   
   return (
     <Wrapper variant='outlined' sx={{ maxWidth: 345, padding:'16px', borderRadius:'20px' }}>
@@ -136,15 +139,15 @@ function JobCard({ job }) {
         <div>
           <div>
             <HeaderTitle variant='h3'>{job.companyName}</HeaderTitle>
-            <HeaderSubTitle>{job.jobRole}</HeaderSubTitle>
+            <HeaderSubTitle>{roleFormatting(job.jobRole)}</HeaderSubTitle>
           </div>
-          <HeaderSubText>{job.location}</HeaderSubText>
+          <HeaderSubText>{locationFormatting(job.location)}</HeaderSubText>
         </div>
       </CardHeader>
-      <SalaryTypography >
-        Estimated Salary : 10-14 LPA
-      </SalaryTypography>
-      <CardContent>
+      {salary && <SalaryTypography >
+        Estimated Salary : {salary} ✅
+      </SalaryTypography>}
+      <CardContent isNull={job.minExp === null}>
         <Typography style={{fontWeight:500, fontSize:'1rem', lineHeight:1.5}}>
             About Company:
         </Typography>
@@ -155,10 +158,10 @@ function JobCard({ job }) {
         <ViewJobContainer>
             <ViewJobText href='#'>View job</ViewJobText>
         </ViewJobContainer>
-        <div style={{marginTop:10, paddingBottom:8}}>
+        {job.minExp && <div style={{marginTop:10, paddingBottom:8}}>
             <MinExpText>Minimum Experience</MinExpText>
-            <MinExpSubText>1 years</MinExpSubText>
-        </div>
+            <MinExpSubText>{job.minExp} years</MinExpSubText>
+        </div>}
         <ButtonGroup>
             <EasyApplyButton>⚡ Easy Apply</EasyApplyButton>
             <ReferralButton>

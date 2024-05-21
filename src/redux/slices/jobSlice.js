@@ -5,11 +5,14 @@ import { getNextBatch } from '../../api'
 export const jobSlice = createSlice({
   name: 'jobs',
   initialState: {
-    value: getNextBatch(0)
+    value: getNextBatch(0), 
+    hasMore : true
   },
   reducers: {
     add : (state, action)=>{
-        state.value = state.value.concat(getNextBatch(action.payload))
+        const nextJobs = getNextBatch(action.payload);
+        if(nextJobs.length === 0) state.hasMore = false;
+        state.value = state.value.concat(nextJobs);
     }
   }
 })

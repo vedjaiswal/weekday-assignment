@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import JobCard from './JobCard'
-import { Button, Grid, styled } from '@mui/material';
+import Loader from './Loader';
+import { Grid, styled } from '@mui/material';
 
 import { add } from '../redux/slices/jobSlice';
 
@@ -16,28 +17,39 @@ const GridContainer = styled(Grid)(({ theme }) => ({
 
 function Jobs() {
 
-    const [ count, setCount ] = useState(1);
-    const [ totalJobs, setTotalJobs ] = useState([]);
-    const [ filteredJobs, setFilteredJobs ] = useState([]);
     const dispatch = useDispatch();
-    const jobs = useSelector(state => state.jobs.value);
+    const jobs = useSelector(state => state.jobs);
     const filters = useSelector(state => state.filters.value);
 
+    const [ hasMore, setHasMore ] = useState(jobs.hasMore)
+    const [ page, setPage ] = useState(1);
+    const [ filteredJobs, setFilteredJobs ] = useState([]);
+    const [ loading, setLoading ] = useState(false)
+    const observer = useRef();
+
+    const lastJobElementRef = useCallback(node => {
+        if(loading) return;
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver(entries => {
+          if (entries[0].isIntersecting && hasMore) {
+            loadMore();
+          }
+        });
+        if (node) observer.current.observe(node);
+      }, [hasMore, page]);
+
+
     const loadMore = () =>{
-        dispatch(add(count))
-        setCount(prev => prev+1);
+        dispatch(add(page))
+        setPage(prev => prev+1);
     }
 
     useEffect(()=>{
-        setTotalJobs(jobs)
-    }, [jobs])
-
-    useEffect(()=>{
-        const filtering = totalJobs.filter(job => {
+        const filtering = jobs.value.filter(job => {
               const roleMatch = filters.role.length === 0 || filters.role.some(role => job.jobRole.toLowerCase().includes(role.title.toLowerCase()));
               const minExpMatch = !filters.experience || job.minExp >= filters.experience;
               const locationMatch = filters.location.length === 0 || filters.location.some(location => job.location.toLowerCase().includes(location.toLowerCase()));
-              const techStackMatch = filters.techStack.length == 0 || filters.techStack.some(techStack => job.jobDetailsFromCompany.toLowerCase().includes(techStack.toLowerCase()))
+              const techStackMatch = filters.techStack.length === 0 || filters.techStack.some(techStack => job.jobDetailsFromCompany.toLowerCase().includes(techStack.toLowerCase()))
               const minPayMatch = !filters.minBasePay || job.maxJdSalary >= parseInt(filters.minBasePay)
               const companyNameMatch = !filters.companyName || job.companyName.toLowerCase().includes(filters.companyName.toLowerCase());
               const remoteMatch = filters.remote.length === 0 || filters.remote.some(remote => {
@@ -51,19 +63,30 @@ function Jobs() {
               return roleMatch && minExpMatch && locationMatch && remoteMatch && minPayMatch && techStackMatch && companyNameMatch;
             });
         setFilteredJobs(filtering)
+        setHasMore(jobs.hasMore);
     }, [jobs, filters])
 
   return (
-    <GridContainer container spacing={4} >
-        {
-            filteredJobs.map(job =>(
-                <Grid item xs={12} sm={12} md={6} lg={4} >
-                    <JobCard job={job} key={job.jdUid} />
-                </Grid>
-            ))
-        }
-        <Button variant='contained' onClick={loadMore}>load</Button>
-    </GridContainer>
+    <>
+     { loading ? <Loader/> :
+       <GridContainer container spacing={4} >
+            {
+              filteredJobs.map((job, index) =>{
+                if(filteredJobs.length === index + 1){
+                  return <Grid ref={lastJobElementRef} item xs={12} sm={12} md={6} lg={4} >
+                                    <JobCard job={job} key={job.jdUid} />
+                                </Grid>
+                    }
+                    else{
+                      return <Grid item xs={12} sm={12} md={6} lg={4} >
+                                    <JobCard job={job} key={job.jdUid} />
+                                </Grid>
+                    }
+                  })
+                }
+        </GridContainer>
+      }
+    </>
   )
 }
 
