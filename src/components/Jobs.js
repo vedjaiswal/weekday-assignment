@@ -9,9 +9,10 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const GridContainer = styled(Grid)(({ theme }) => ({
     width:'80vw',
-    margin: '2px',
+    marginLeft : '30px',
     [theme.breakpoints.down('md')]: {
-        width:'90vw'
+        width:'90vw',
+        margin : '0px'
     }
 }));
 
@@ -75,42 +76,41 @@ function Jobs() {
       return () => clearTimeout(jobsLoadingTimer);
     }, [hasMore]);
 
-
     useEffect(()=>{
       setFilteredJobs(filteringJobs(jobs.value, filters))
     }, [jobs])
 
     useEffect(()=>{
-        setFilterLoading(true)        
-        const filterLoadingTimer = setTimeout(()=>{
-          dispatch(initial());
-          setPage(1);
-          setHasMore(true);
-          setFilteredJobs(filteringJobs(jobs.value, filters))
-          setFilterLoading(false)
-        }, 500);
-        return () => clearTimeout(filterLoadingTimer);
+      setFilterLoading(true)        
+      const filterLoadingTimer = setTimeout(()=>{
+        dispatch(initial());
+        setPage(1);
+        setHasMore(true);
+        setFilteredJobs(filteringJobs(jobs.value, filters))
+        setFilterLoading(false)
+      }, 500);
+      return () => clearTimeout(filterLoadingTimer);
     }, [filters])
 
   return (
     <>
      { filterLoading ? <Loader/> :
-       <GridContainer container spacing={4} >
-            {
-              filteredJobs.map((job, index) =>{
-                if(filteredJobs.length === index + 1){
-                  return <Grid ref={lastJobElementRef} item xs={12} sm={12} md={6} lg={4} >
-                                    <JobCard job={job} key={job.jdUid} />
-                                </Grid>
-                }
-                else{
-                  return <Grid item xs={12} sm={12} md={6} lg={4} >
-                                <JobCard job={job} key={job.jdUid} />
-                            </Grid>
-                }
-              })
-            }
-            { loading && <Loader/>}
+       <GridContainer container >
+          {
+            filteredJobs.map((job, index) =>{
+              if(filteredJobs.length === index + 1){
+                return <Grid ref={lastJobElementRef} item xs={12} sm={12} md={6} lg={4} >
+                          <JobCard job={job} key={job.jdUid} />
+                        </Grid>
+              }
+              else{
+                return <Grid item xs={12} sm={12} md={6} lg={4} >
+                          <JobCard job={job} key={job.jdUid} />
+                        </Grid>
+              }
+            })
+          }
+          { loading && <Loader/> }
         </GridContainer>
       }
     </>
