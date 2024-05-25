@@ -39,6 +39,6 @@ export const location = ["India", "Mumbai", "Delhi", "Bangalore", "Pune", "Hyder
 
 export const remote = ["Remote", "Hybrid", "In-office"]
 
-export const minBasePay = ['0L', '10L', '20L', '30L', '40L', '50L', '60L', '70L'];
+export const minBasePay = ['0K', '10K', '20K', '30K', '40K', '50K', '70K', '100K'];
 
 export const techStack = ["React", "Nodejs", "React Native", "Flutter", "Express", "Java", "MongoDB", "MERN", "Web Development", "Python", "JavaScript", "C", "C++", "C#", "Android Development", "AI ML", "Vue JS", "Angular", "SQL", "Postgres", "IOS", "MEAN"]
