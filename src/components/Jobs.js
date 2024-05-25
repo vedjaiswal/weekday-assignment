@@ -95,7 +95,7 @@ function Jobs() {
   return (
     <>
      { filterLoading ? <Loader/> :
-       <GridContainer container >
+       <GridContainer container rowSpacing={4}>
           {
             filteredJobs.map((job, index) =>{
               if(filteredJobs.length === index + 1){
