@@ -44,7 +44,7 @@ function Jobs() {
         const minPayMatch = !filters.minBasePay || job.maxJdSalary >= parseInt(filters.minBasePay)
         const companyNameMatch = !filters.companyName || job.companyName.toLowerCase().includes(filters.companyName.toLowerCase());
         const remoteMatch = filters.remote.length === 0 || filters.remote.some(remote => {
-          if(remote !== 'In-office'){
+          if(remote === 'remote'){
               return remote.toLowerCase() === job.location.toLowerCase();
           }
           else if(remote === 'In-office'){
